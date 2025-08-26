@@ -16,12 +16,12 @@ root.geometry("780x550")
 root.resizable(False,False)
 
 conn = mysql.connector.connect(
-    host     = "141.209.241.57",
-    port     = 3306,
-    user     = "darap1s",
-    password = "mypass",
-    database = "BIS698M1530_GRP5"
-    )
+    host="localhost",
+    user="root",
+    password="yourRealPassword",
+    database="gamers_guild",
+    port=3306
+)
 cursor = conn.cursor()
 
 #User Dashboard Icons
@@ -341,5 +341,6 @@ clear_cart_button = ctk.CTkButton(
     command=clear_cart
 )
 clear_cart_button.place(x=300, y=400)
+
 
 root.mainloop()
