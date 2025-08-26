@@ -12,11 +12,11 @@ def open_dashboard(firstname):
     root.geometry("780x550")
     root.resizable(False,False)
 
-    user_account_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardUserIcon.png"
-    user_games_icon_path   = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameIcon.png"
-    game_library_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameLibraryIcon.png"
-    cart_icon_path         = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardCartIcon.png"
-    signout_icon_path      = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\signoutButtonIcon.png"
+    user_account_icon_path = r"C:\Users\file_path\Icon.png"
+    user_games_icon_path   = r"C:\Users\file_path\Icon.png"
+    game_library_icon_path = r"C:\Users\file_path\Icon.png"
+    cart_icon_path         = r"C:\Users\file_path\Icon.png"
+    signout_icon_path      = r"C:\Users\file_path\Icon.png"
 
     user_account_icon    = ctk.CTkImage(light_image=Image.open(user_account_icon_path), size=(80, 80))
     user_games_icon      = ctk.CTkImage(light_image=Image.open(user_games_icon_path), size=(80, 80))
@@ -102,3 +102,4 @@ def open_dashboard(firstname):
     welcome_name_label.place(x=345, y=30)
 
     root.mainloop()
+
