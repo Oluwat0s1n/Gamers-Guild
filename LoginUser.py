@@ -1,6 +1,5 @@
 import customtkinter as ctk
 import tkinter as tk
-import mysql.connector
 from PIL import Image,ImageTk
 from tkinter import messagebox
 import re
@@ -42,13 +41,8 @@ def login_user():
         messagebox.showwarning("Missing Fields", "Please enter both email and password.")
         return
     try:
-       conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="yourRealPassword",
-    database="gamers_guild",
-    port=3306
-)
+      from db import get_connection
+conn = get_connection()
 cursor = conn.cursor()
 
          #  Check Admin login first 
@@ -185,3 +179,4 @@ clear_button.place(x = 227, y = 345)
 if __name__ == "__main__":
 
     root.mainloop()
+
