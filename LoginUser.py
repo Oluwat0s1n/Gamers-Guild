@@ -87,7 +87,9 @@ cursor = conn.cursor()
         cursor.close()
         conn.close()
 
-    except mysql.connector.Error as e:
+    from mysql.connector import Error
+# ...
+except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 #Function to delete text in the Entry Widgets
@@ -179,4 +181,5 @@ clear_button.place(x = 227, y = 345)
 if __name__ == "__main__":
 
     root.mainloop()
+
 
