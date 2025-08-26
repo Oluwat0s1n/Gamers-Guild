@@ -7,11 +7,11 @@ import sys
 
 # SQL Connection
 conn = mysql.connector.connect(
-    host     = "141.209.241.57",
-    port     = 3306,
-    user     = "darap1s",
-    password = "mypass",
-    database = "BIS698M1530_GRP5"
+    host="...",
+    user="...",
+    password="...",
+    database="...",
+    port=...
 )
 cursor = conn.cursor()
 
@@ -148,3 +148,4 @@ refresh_orders()
 app.mainloop()
 cursor.close()
 conn.close()
+
