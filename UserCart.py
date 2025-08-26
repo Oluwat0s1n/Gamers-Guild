@@ -24,13 +24,16 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-#User Dashboard Icons
-user_account_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardUserIcon.png"
-user_games_icon_path   = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameIcon.png"
-game_library_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameLibraryIcon.png"
-cart_icon_path         = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardCartIcon.png"
-back_icon_path         = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\backButtonIcon.png"
-change_icon_path       = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\editIcon.png"
+from db import image_path  # add this import at the top
+
+# User Dashboard Icons 
+user_account_icon_path = image_path("dashboardUserIcon.png")
+user_games_icon_path   = image_path("dashboardGameIcon.png")
+game_library_icon_path = image_path("dashboardGameLibraryIcon.png")
+cart_icon_path         = image_path("dashboardCartIcon.png")
+back_icon_path         = image_path("backButtonIcon.png")
+change_icon_path       = image_path("editIcon.png")
+
 
 user_account_icon    = ctk.CTkImage(light_image=Image.open(user_account_icon_path), size=(80, 80))
 user_games_icon      = ctk.CTkImage(light_image=Image.open(user_games_icon_path), size=(80, 80))
@@ -344,3 +347,4 @@ clear_cart_button.place(x=300, y=400)
 
 
 root.mainloop()
+
