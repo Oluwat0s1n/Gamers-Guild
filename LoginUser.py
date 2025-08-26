@@ -42,16 +42,16 @@ def login_user():
         messagebox.showwarning("Missing Fields", "Please enter both email and password.")
         return
     try:
-        conn = mysql.connector.connect(
-            host="141.209.241.57",
-            port=3306,
-            user="darap1s",
-            password="mypass",
-            database="BIS698M1530_GRP5"
-        )
-        cursor = conn.cursor()
+       conn = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="yourRealPassword",
+    database="gamers_guild",
+    port=3306
+)
+cursor = conn.cursor()
 
-         # -------- Check Admin login first --------
+         #  Check Admin login first 
         admin_query = "SELECT Email FROM Admin WHERE Email = %s AND Password = %s"
         cursor.execute(admin_query, (user_email, user_password))
         admin_result = cursor.fetchone()
@@ -183,4 +183,5 @@ clear_button.place(x = 227, y = 345)
 
 # Only run this if this file is executed directly
 if __name__ == "__main__":
+
     root.mainloop()
