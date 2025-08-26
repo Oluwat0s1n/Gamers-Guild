@@ -1,6 +1,5 @@
 import customtkinter as ctk
 from tkinter import messagebox
-import mysql.connector
 import os
 import sys
 
@@ -11,13 +10,8 @@ app.geometry("400x350")
 app.resizable(True, True)
 
 # SQL connection
-conn = mysql.connector.connect(
-    host="...",
-    user="...",
-    password="...",
-    database="...",
-    port=...
-)
+from db import get_connection
+conn = get_connection()
 cursor = conn.cursor()
 
 # Variables
@@ -75,4 +69,5 @@ ctk.CTkButton(app, text="Reset Password", command=reset_password, width=160).pac
 app.mainloop()
 cursor.close()
 conn.close()
+
 
