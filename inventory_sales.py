@@ -10,16 +10,16 @@ import datetime
 
 # SQL Connection
 conn = mysql.connector.connect(
-    host     = "141.209.241.57",
-    port     = 3306,
-    user     = "darap1s",
-    password = "mypass",
-    database = "BIS698M1530_GRP5"
+    host="...",
+    user="...",
+    password="...",
+    database="...",
+    port=...
 )
 cursor = conn.cursor()
 
 # Correct ICON PATH
-ICON_PATH = "C:/Users/darap/PycharmProjects/darap1s_project/BIS 698_Group 5/Images/"
+ICON_PATH = "C:/Users/file_path/Images/"
 
 def load_icon(filename):
     return ctk.CTkImage(Image.open(os.path.join(ICON_PATH, filename)).resize((22, 22)))
@@ -222,3 +222,4 @@ refresh_sales()
 app.mainloop()
 cursor.close()
 conn.close()
+
