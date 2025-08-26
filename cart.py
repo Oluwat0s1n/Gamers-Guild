@@ -14,21 +14,16 @@ root.geometry("780x550")
 root.resizable(False,False)
 
 conn = mysql.connector.connect(
-    host     = "141.209.241.57",
-    port     = 3306,
-    user     = "darap1s",
-    password = "mypass",
-    database = "BIS698M1530_GRP5"
-    )
+    host="...",
+    user="...",
+    password="...",
+    database="...",
+    port=...
+)
 cursor = conn.cursor()
 
-#User Dashboard Icons
-user_account_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardUserIcon.png"
-user_games_icon_path   = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameIcon.png"
-game_library_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameLibraryIcon.png"
-cart_icon_path         = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardCartIcon.png"
-back_icon_path         = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\backButtonIcon.png"
-change_icon_path       = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\editIcon.png"
+# Icons
+icon_path = r"C:\Users\file_path\Images\Icon.png"
 
 user_account_icon    = ctk.CTkImage(light_image=Image.open(user_account_icon_path), size=(80, 80))
 user_games_icon      = ctk.CTkImage(light_image=Image.open(user_games_icon_path), size=(80, 80))
@@ -348,5 +343,6 @@ clear_cart_button = ctk.CTkButton(
     command=clear_cart
 )
 clear_cart_button.place(x=300, y=400)
+
 
 root.mainloop()
