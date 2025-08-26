@@ -8,13 +8,14 @@ from UserDashboard import open_dashboard
 
 # SQL Connection
 conn = mysql.connector.connect(
-    host="141.209.241.57",
-    port=3306,
-    user="darap1s",
-    password="mypass",
-    database="BIS698M1530_GRP5"
+    host="localhost",
+    user="root",
+    password="yourRealPassword",
+    database="gamers_guild",
+    port=3306
 )
 cursor = conn.cursor()
+
 
 # Root window
 root = ctk.CTk()
@@ -239,3 +240,4 @@ def display_games_from_db():
 display_games_from_db()
 
 root.mainloop()
+
