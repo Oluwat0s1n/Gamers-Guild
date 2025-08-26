@@ -13,11 +13,11 @@ GAME_ID = sys.argv[1]
 
 # SQL connection
 conn = mysql.connector.connect(
-    host     = "141.209.241.57",
-    port     = 3306,
-    user     = "darap1s",
-    password = "mypass",
-    database = "BIS698M1530_GRP5"
+    host="...",
+    user="...",
+    password="...",
+    database="...",
+    port=...
 )
 cursor = conn.cursor()
 
@@ -128,3 +128,4 @@ ctk.CTkButton(app, text="Update Game", command=update_game).pack(pady=20)
 app.mainloop()
 cursor.close()
 conn.close()
+
