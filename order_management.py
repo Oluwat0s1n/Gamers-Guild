@@ -16,7 +16,7 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 # ICON PATH
-ICON_PATH = "C:/Users/darap/PycharmProjects/darap1s_project/BIS 698_Group 5/Images/"
+user_account_icon_path = r"C:\Users\...\Images\Icon.png"
 
 def load_icon(filename):
     return ctk.CTkImage(Image.open(os.path.join(ICON_PATH, filename)).resize((22, 22)))
@@ -148,4 +148,5 @@ refresh_orders()
 app.mainloop()
 cursor.close()
 conn.close()
+
 
