@@ -9,11 +9,11 @@ import subprocess
 # Database Connection
 def connect_database():
     return mysql.connector.connect(
-        host="141.209.241.57",
-        port=3306,
-        user="darap1s",
-        password="mypass",
-        database="BIS698M1530_GRP5"
+        host="localhost",
+    user="root",
+    password="yourRealPassword",
+    database="gamers_guild",
+    port=3306
     )
 
 root = ctk.CTk()
@@ -219,3 +219,4 @@ error_message_label.place(x = 120,y = 30)
 
 
 root.mainloop()
+
