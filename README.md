@@ -48,3 +48,10 @@ Python · CustomTkinter · Pillow · MySQL · `mysql-connector-python` · `pytho
    ```bash
    python3 -m venv .venv
    source .venv/bin/activate
+
+## Database scripts
+Schema lives in [`sql/GamersGuild_DB.sql`](sql/GamersGuild_DB.sql).
+Run (MySQL):
+```bash
+mysql -u <user> -p < sql/GamersGuild_DB.sql
+
