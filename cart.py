@@ -346,3 +346,4 @@ clear_cart_button.place(x=300, y=400)
 
 
 root.mainloop()
+
