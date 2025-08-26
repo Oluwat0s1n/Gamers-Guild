@@ -31,14 +31,14 @@ def fetch_user_details(customerID=None):
         messagebox.showerror("Error", "No customer ID provided!")
         return
     
-    conn = mysql.connector.connect(
-    host     = "141.209.241.57",
-    port     = 3306,
-    user     = "darap1s",
-    password = "mypass",
-    database = "BIS698M1530_GRP5"
-    )
-    cursor = conn.cursor()
+   conn = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="yourRealPassword",
+    database="gamers_guild",
+    port=3306
+)
+cursor = conn.cursor()
 
     query = "SELECT FirstName, LastName, Address, Email, Password FROM Customer WHERE CustomerID = %s"
     cursor.execute(query, (customerID,))
@@ -389,4 +389,5 @@ if __name__ == "__main__":
     fetch_user_details()
 
     root.mainloop()
+
 
