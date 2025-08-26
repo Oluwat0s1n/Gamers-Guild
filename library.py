@@ -8,13 +8,14 @@ import os
 
 # SQL Connection
 conn = mysql.connector.connect(
-    host     = "141.209.241.57",
-    port     = 3306,
-    user     = "darap1s",
-    password = "mypass",
-    database = "BIS698M1530_GRP5"
-    )
+    host="...",
+    user="...",
+    password="...",
+    database="...",
+    port=...
+)
 cursor = conn.cursor()
+)
 
 # Root window
 root = ctk.CTk()
@@ -52,11 +53,14 @@ def go_back_to_dashboard():
 
             # Connect to the database to get the FirstName
             conn = mysql.connector.connect(
-                host="141.209.241.57",
-                port=3306,
-                user="darap1s",
-                password="mypass",
-                database="BIS698M1530_GRP5"
+    host="...",
+    user="...",
+    password="...",
+    database="...",
+    port=...
+)
+cursor = conn.cursor()
+
             )
             cursor = conn.cursor()
 
@@ -81,12 +85,7 @@ def go_back_to_dashboard():
         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 # User Dashboard Icons
-user_account_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardUserIcon.png"
-user_games_icon_path   = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameIcon.png"
-game_library_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameLibraryIcon.png"
-cart_icon_path         = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardCartIcon.png"
-back_icon_path         = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\backButtonIcon.png"
-
+all_image_path = r"C:\Users\...\Images\Icon.png"
 
 user_account_icon = ctk.CTkImage(light_image=Image.open(user_account_icon_path), size=(80, 80))
 user_games_icon = ctk.CTkImage(light_image=Image.open(user_games_icon_path), size=(80, 80))
@@ -195,3 +194,4 @@ def display_games_from_db():
 display_games_from_db()
 
 root.mainloop()
+
