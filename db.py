@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import mysql.connector
 
-load_dotenv()  # reads .env when you run locally
+load_dotenv()  # reads .env at run time 
 
 def get_connection():
     return mysql.connector.connect(
@@ -13,6 +13,6 @@ def get_connection():
         port=int(os.getenv("DB_PORT", "3306"))
     )
 
-def image_path(filename: str) -> str:
-    base = os.getenv("IMAGE_DIR", "images")
-    return os.path.join(base, filename)
+def image_path(name: str) -> str:
+    base = os.getenv("IMAGE_DIR", "images")  # default to 'images' folder
+    return os.path.join(base, name)
