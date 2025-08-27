@@ -37,8 +37,6 @@ Python · CustomTkinter · Pillow · MySQL · `mysql-connector-python` · `pytho
 - `add_game_form.py`, `edit_game_form.py`, `forgot_password.py`
 - `db.py` — small helper that reads DB settings from `.env` and returns a MySQL connection
 
-> Tip: Real passwords live in `.env` on your machine. The repo includes **`.env.example`** to show the variables, but never commit your real `.env`.
-
 ---
 
 ## Run it locally (Mac)
