@@ -1,7 +1,6 @@
 # edit_game_form.py
 import customtkinter as ctk
 from tkinter import messagebox
-
 import sys
 from mysql.connector import Error
 from db import get_connection
@@ -124,4 +123,5 @@ ctk.CTkButton(app, text="Update Game", command=update_game).pack(pady=20)
 app.mainloop()
 cursor.close()
 conn.close()
+
 
