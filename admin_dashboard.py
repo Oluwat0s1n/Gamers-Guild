@@ -4,7 +4,6 @@ from PIL import Image
 import os
 import sys
 from db import get_connection, image_path     
-from db import get_connection, image_path
 
 # ---------- DB ----------
 conn = get_connection()
@@ -277,6 +276,7 @@ on_close()
 
 <<<<<<< HEAD
 =======
+
 
 
 >>>>>>> 207446380f2c98b0f02157a6a88829d8b0279944
