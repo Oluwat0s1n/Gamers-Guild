@@ -2,74 +2,73 @@
 import customtkinter as ctk
 from tkinter import messagebox
 import sys
-from mysql.connector import Error
-from db import get_connection
+from decimal import Decimal, InvalidOperation
 
-# Get Game ID from command line
+from db import get_connection  
+
+# --- read Game ID from admin_dashboard.py argument ---
 if len(sys.argv) < 2:
     print("Game ID not provided.")
-    sys.exit()
+    sys.exit(1)
 
 GAME_ID = sys.argv[1]
 
-# SQL connection
+# --- DB connection ---
 conn = get_connection()
 cursor = conn.cursor()
 
-# Fetch game data
-cursor.execute("SELECT Title, Genre, Price, Type, Stock, AdminID FROM Game WHERE GameID = %s", (GAME_ID,))
-game_data = cursor.fetchone()
-
-if not game_data:
+# --- fetch current game + admins ---
+cursor.execute(
+    "SELECT Title, Genre, Price, Type, Stock FROM Game WHERE GameID = %s",
+    (GAME_ID,),
+)
+game = cursor.fetchone()
+if not game:
     print("Game not found.")
-    sys.exit()
+    sys.exit(1)
 
-# Fetch admin names and emails
+title0, genre0, price0, type0, stock0 = game
+
 cursor.execute("SELECT Name, Email FROM Admin")
 admins = cursor.fetchall()
-admin_names = [a[0] for a in admins]
+admin_names  = [a[0] for a in admins]
 admin_emails = [a[1] for a in admins]
 
-# GUI window
+# --- UI ---
 app = ctk.CTk()
 app.title("Edit Game")
 app.geometry("500x650")
 
 ctk.CTkLabel(app, text="Edit Game", font=("Arial", 20, "bold")).pack(pady=10)
 
-# Admin Credentials
+# Admin creds
 ctk.CTkLabel(app, text="Admin Name:").pack()
-admin_name_var = ctk.StringVar()
-admin_name_menu = ctk.CTkOptionMenu(app, variable=admin_name_var, values=admin_names)
-admin_name_menu.pack(pady=5)
+admin_name_var = ctk.StringVar(value=admin_names[0] if admin_names else "")
+ctk.CTkOptionMenu(app, variable=admin_name_var, values=admin_names).pack(pady=5)
 
 ctk.CTkLabel(app, text="Admin Email:").pack()
-admin_email_var = ctk.StringVar()
-admin_email_menu = ctk.CTkOptionMenu(app, variable=admin_email_var, values=admin_emails)
-admin_email_menu.pack(pady=5)
+admin_email_var = ctk.StringVar(value=admin_emails[0] if admin_emails else "")
+ctk.CTkOptionMenu(app, variable=admin_email_var, values=admin_emails).pack(pady=5)
 
 ctk.CTkLabel(app, text="Admin Password:").pack()
 admin_password_entry = ctk.CTkEntry(app, show="*")
 admin_password_entry.pack(pady=5)
 
 # Game fields
-title_var = ctk.StringVar(value=game_data[0])
-genre_var = ctk.StringVar(value=game_data[1])
-price_var = ctk.StringVar(value=game_data[2])
-type_var = ctk.StringVar(value=game_data[3])
-stock_var = ctk.StringVar(value=game_data[4])
+title_var = ctk.StringVar(value=str(title0))
+genre_var = ctk.StringVar(value=str(genre0) if genre0 else "")
+price_var = ctk.StringVar(value=str(price0))
+type_var  = ctk.StringVar(value=str(type0))
+stock_var = ctk.StringVar(value=str(stock0))
 
 ctk.CTkLabel(app, text="Game Title:").pack()
-title_entry = ctk.CTkEntry(app, textvariable=title_var)
-title_entry.pack(pady=5)
+ctk.CTkEntry(app, textvariable=title_var).pack(pady=5)
 
 ctk.CTkLabel(app, text="Genre:").pack()
-genre_entry = ctk.CTkEntry(app, textvariable=genre_var)
-genre_entry.pack(pady=5)
+ctk.CTkEntry(app, textvariable=genre_var).pack(pady=5)
 
 ctk.CTkLabel(app, text="Price:").pack()
-price_entry = ctk.CTkEntry(app, textvariable=price_var)
-price_entry.pack(pady=5)
+ctk.CTkEntry(app, textvariable=price_var).pack(pady=5)
 
 ctk.CTkLabel(app, text="Type:").pack()
 type_menu = ctk.CTkOptionMenu(app, variable=type_var, values=["Physical", "Digital"])
@@ -77,51 +76,80 @@ type_menu.pack(pady=5)
 
 stock_frame = ctk.CTkFrame(app)
 ctk.CTkLabel(stock_frame, text="Stock:").pack()
-stock_entry = ctk.CTkEntry(stock_frame, textvariable=stock_var)
-stock_entry.pack()
+ctk.CTkEntry(stock_frame, textvariable=stock_var).pack()
 stock_frame.pack(pady=5)
 
 def toggle_stock(value):
-    if value == "Physical":
-        stock_frame.pack(pady=5)
-    else:
-        stock_frame.pack_forget()
+    # show stock box only for Physical items
+    (stock_frame.pack if value == "Physical" else stock_frame.pack_forget)(pady=5)
 
 type_menu.configure(command=toggle_stock)
 toggle_stock(type_var.get())
 
-# Update function
+# --- actions ---
 def update_game():
-    name = admin_name_var.get()
-    email = admin_email_var.get()
-    password = admin_password_entry.get()
+    # admin check
+    name  = admin_name_var.get().strip()
+    email = admin_email_var.get().strip()
+    pwd   = admin_password_entry.get()
 
-    title = title_var.get()
-    genre = genre_var.get()
-    price = price_var.get()
-    game_type = type_var.get()
-    stock = stock_var.get() if game_type == "Physical" else "∞"
+    # game fields
+    title    = title_var.get().strip()
+    genre    = genre_var.get().strip()
+    gtype    = type_var.get().strip()
+    try:
+        price = Decimal(price_var.get().strip())
+    except InvalidOperation:
+        messagebox.showerror("Invalid price", "Please enter a valid number for Price.")
+        return
 
-    cursor.execute("SELECT AdminID FROM Admin WHERE Name=%s AND Email=%s AND Password=%s",
-                   (name, email, password))
-    result = cursor.fetchone()
+    stock = stock_var.get().strip() if gtype == "Physical" else "∞"
 
-    if result:
-        cursor.execute("""
+    if not title:
+        messagebox.showerror("Missing title", "Game title is required.")
+        return
+
+    # verify admin (plain-text per your current schema)
+    cursor.execute(
+        "SELECT 1 FROM Admin WHERE Name=%s AND Email=%s AND Password=%s",
+        (name, email, pwd),
+    )
+    if not cursor.fetchone():
+        messagebox.showerror("Access Denied", "Invalid admin credentials.")
+        return
+
+    # update
+    try:
+        cursor.execute(
+            """
             UPDATE Game
-            SET Title=%s, Genre=%s, Price=%s, Type=%s, Stock=%s
-            WHERE GameID=%s
-        """, (title, genre, price, game_type, stock, GAME_ID))
+               SET Title=%s, Genre=%s, Price=%s, Type=%s, Stock=%s
+             WHERE GameID=%s
+            """,
+            (title, genre, str(price), gtype, stock, GAME_ID),
+        )
         conn.commit()
         messagebox.showinfo("Success", "Game updated successfully!")
         app.destroy()
-    else:
-        messagebox.showerror("Access Denied", "Invalid admin credentials")
+    except Exception as e:
+        messagebox.showerror("Database Error", f"{e}")
 
 ctk.CTkButton(app, text="Update Game", command=update_game).pack(pady=20)
 
+def on_close():
+    try:
+        cursor.close()
+    except:
+        pass
+    try:
+        conn.close()
+    except:
+        pass
+    app.destroy()
+
+app.protocol("WM_DELETE_WINDOW", on_close)
 app.mainloop()
-cursor.close()
-conn.close()
+on_close()
+
 
 
