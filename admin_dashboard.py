@@ -4,8 +4,6 @@ from PIL import Image
 import os
 import sys
 from db import get_connection, image_path     
-
-
 from db import get_connection, image_path
 
 # ---------- DB ----------
