@@ -3,7 +3,6 @@ import customtkinter as ctk
 from tkinter import messagebox
 import sys
 from decimal import Decimal, InvalidOperation
-
 from db import get_connection  
 
 # --- read Game ID from admin_dashboard.py argument ---
