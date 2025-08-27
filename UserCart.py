@@ -1,7 +1,6 @@
 import customtkinter as ctk
 import tkinter as tk
 from tkinter import Entry
-import mysql.connector
 from PIL import Image,ImageTk
 from tkinter import messagebox
 import re
@@ -9,19 +8,15 @@ import subprocess
 from decimal import Decimal
 import os
 from UserDashboard import open_dashboard
+from mysql.connector import Error
+from db import get_connection
 
 root = ctk.CTk()
 root.title("User Cart 222")
 root.geometry("780x550")
 root.resizable(False,False)
 
-conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="yourRealPassword",
-    database="gamers_guild",
-    port=3306
-)
+conn = get_connection()
 cursor = conn.cursor()
 
 from db import image_path  # add this import at the top
@@ -102,7 +97,7 @@ def fetch_cart_items():
         cursor.execute("SELECT GameTitle, Price FROM Cart WHERE CustomerID = %s", (customer_id,))
 
         return cursor.fetchall()
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
         return []
 
@@ -163,7 +158,7 @@ def clear_cart():
             highlight_entry(security_code, "gray")
 
             messagebox.showinfo("Cart Cleared", "All items and payment fields have been cleared.")
-        except mysql.connector.Error as e:
+        except Error as e:
             messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 def open_library_page():
@@ -178,13 +173,7 @@ def go_back_to_dashboard():
                 customerID = f.read().strip()
 
             # Connect to the database to get the FirstName
-            conn = mysql.connector.connect(
-                host="141.209.241.57",
-                port=3306,
-                user="darap1s",
-                password="mypass",
-                database="BIS698M1530_GRP5"
-            )
+            conn = get_connection()
             cursor = conn.cursor()
 
             fname_query = "SELECT FirstName FROM Customer WHERE CustomerID = %s"
@@ -204,7 +193,7 @@ def go_back_to_dashboard():
             conn.close()
         else:
             messagebox.showerror("Error", "Session expired. Please log in again.")
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 def complete_payment():
@@ -262,7 +251,7 @@ def complete_payment():
 
         conn.commit()
 
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
     # Clear Cart after inserting into Library

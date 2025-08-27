@@ -114,7 +114,7 @@ login_inner_frame_right.pack_propagate(False)
 login_inner_frame_right.place(x =360,y = 50)
 
 #File Path to the image and its size along with its image placement
-login_image = resize_image((600,600),r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\loginPage_image.png")
+login_image = resize_image((600,600),image_path("loginPage_image.png"))
 logo_label = ctk.CTkLabel(root,text = "",image = login_image, bg_color="#CDC6FF")
 logo_label.place(x = 30, y = 110)
 
@@ -123,8 +123,8 @@ login_customer_label = ctk.CTkLabel(login_inner_frame_right,text = "Welcome Back
                                        fg_color = "#C1B7FF",text_color = "#493287",font = ('Montserrat', 22, 'bold'))
 login_customer_label.place(x = 50, y = 75)
 
-email_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\emailIcon.png"
-password_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\passwordIcon.png"
+email_icon_path = image_path("emailIcon.png")
+password_icon_path = image_path("passwordIcon.png")
 
 email_icon = ctk.CTkImage(light_image=Image.open(email_icon_path), size=(18, 18))
 password_icon = ctk.CTkImage(light_image=Image.open(password_icon_path), size=(18, 18))

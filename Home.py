@@ -1,11 +1,12 @@
 import customtkinter as ctk
 import tkinter as tk
-import mysql.connector
+
 from PIL import Image,ImageTk
 from tkinter import messagebox
 import re
 import sys
 import subprocess
+from mysql.connector import Error
 
 root = ctk.CTk()
 root.title("Home")
@@ -45,7 +46,7 @@ home_inner_frame_right.pack_propagate(False)
 home_inner_frame_right.place(x =3,y =15)
 
 #File Path to the image and its size along with its image placement
-home_image = resize_image((600,600),r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\GG_image.png")
+home_image = resize_image((600,600),image_path("GG_image.png"))
 home_logo_label = ctk.CTkLabel(home_frame_left,text = "",image = home_image, bg_color="#CDC6FF")
 home_logo_label.place(x = 30, y = 50)
 

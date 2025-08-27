@@ -1,20 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
-import mysql.connector
 from PIL import Image, ImageTk
 from tkinter import messagebox
 import re
 import subprocess
+from mysql.connector import Error
+from db import get_connection
 
 # Database Connection
 def connect_database():
-    return mysql.connector.connect(
-        host="localhost",
-    user="root",
-    password="yourRealPassword",
-    database="gamers_guild",
-    port=3306
-    )
+    return get_connection()
 
 root = ctk.CTk()
 root.title("Register User")
@@ -75,7 +70,7 @@ def field_validation():
 
             login_in()
 
-        except mysql.connector.Error as err:
+        except Error as err:
             error_message_label.configure(text=f"Database Error: {err}", text_color="red")
 
 #  GUI Layout
@@ -98,7 +93,7 @@ registration_inner_frame_right.pack_propagate(False)
 registration_inner_frame_right.place(x =360,y =15)
 
 #File Path to the image and its size along with its image placement
-register_user_image = resize_image((670,550),r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\Transparent Background - Gamepad Image.png")
+register_user_image = resize_image((670,550),image_path("Transparent Background - Gamepad Image.png"))
 logo_label = ctk.CTkLabel(registration_frame_left,text = "",image = register_user_image)
 logo_label.place(x = 20, y = 130)
 
@@ -107,10 +102,10 @@ register_customer_label = ctk.CTkLabel(registration_inner_frame_right,text = "Re
                                        fg_color = "#C1B7FF",text_color = "#493287",font = ('Montserrat', 20, 'bold'))
 register_customer_label.place(x = 70, y = 5)
 
-user_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\userIcon.png"
-email_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\emailIcon.png"
-password_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\passwordIcon.png"
-address_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\addressIcon.png"
+user_icon_path = image_path("userIcon.png")
+email_icon_path = image_path("emailIcon.png")
+password_icon_path = image_path("passwordIcon.png")
+address_icon_path = image_path("addressIcon.png")
 
 user_icon = ctk.CTkImage(light_image=Image.open(user_icon_path), size=(18, 18))
 email_icon = ctk.CTkImage(light_image=Image.open(email_icon_path), size=(18, 18))

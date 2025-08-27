@@ -1,22 +1,17 @@
 import customtkinter as ctk
 from tkinter import messagebox
 from PIL import Image
-import mysql.connector
 import os
 import sys
+from mysql.connector import Error
+from db import get_connection
 
 # SQL Connection
-conn = mysql.connector.connect(
-    host="...",
-    user="...",
-    password="...",
-    database="...",
-    port=...
-)
+conn = get_connection()
 cursor = conn.cursor()
 
 # ICON PATH
-user_account_icon_path = r"C:\Users\...\Images\Icon.png"
+user_account_icon_path = image_path("Icon.png")
 
 def load_icon(filename):
     return ctk.CTkImage(Image.open(os.path.join(ICON_PATH, filename)).resize((22, 22)))

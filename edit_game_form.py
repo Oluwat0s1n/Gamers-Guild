@@ -1,8 +1,10 @@
 # edit_game_form.py
 import customtkinter as ctk
 from tkinter import messagebox
-import mysql.connector
+
 import sys
+from mysql.connector import Error
+from db import get_connection
 
 # Get Game ID from command line
 if len(sys.argv) < 2:
@@ -12,13 +14,7 @@ if len(sys.argv) < 2:
 GAME_ID = sys.argv[1]
 
 # SQL connection
-conn = mysql.connector.connect(
-    host="...",
-    user="...",
-    password="...",
-    database="...",
-    port=...
-)
+conn = get_connection()
 cursor = conn.cursor()
 
 # Fetch game data

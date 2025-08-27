@@ -1,21 +1,16 @@
 import customtkinter as ctk
 from tkinter import messagebox, filedialog
 from PIL import Image
-import mysql.connector
 import os
 import sys
 import csv
 from fpdf import FPDF
 import datetime
+from mysql.connector import Error
+from db import get_connection
 
 # SQL Connection
-conn = mysql.connector.connect(
-    host="...",
-    user="...",
-    password="...",
-    database="...",
-    port=...
-)
+conn = get_connection()
 cursor = conn.cursor()
 
 # Correct ICON PATH

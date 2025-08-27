@@ -1,29 +1,24 @@
 import customtkinter as ctk
 import tkinter as tk
 from tkinter import Entry
-import mysql.connector
 from PIL import Image,ImageTk
 from tkinter import messagebox
 import re
 import subprocess
 from decimal import Decimal
+from mysql.connector import Error
+from db import get_connection
 
 root = ctk.CTk()
 root.title("Cart 111")
 root.geometry("780x550")
 root.resizable(False,False)
 
-conn = mysql.connector.connect(
-    host="...",
-    user="...",
-    password="...",
-    database="...",
-    port=...
-)
+conn = get_connection()
 cursor = conn.cursor()
 
 # Icons
-icon_path = r"C:\Users\file_path\Images\Icon.png"
+icon_path = image_path("Icon.png")
 
 user_account_icon    = ctk.CTkImage(light_image=Image.open(user_account_icon_path), size=(80, 80))
 user_games_icon      = ctk.CTkImage(light_image=Image.open(user_games_icon_path), size=(80, 80))
@@ -92,7 +87,7 @@ def fetch_cart_items():
         cursor.execute("SELECT GameTitle, Price FROM Cart WHERE CustomerID = %s", (customer_id,))
 
         return cursor.fetchall()
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
         return []
 
@@ -153,7 +148,7 @@ def clear_cart():
             highlight_entry(security_code, "gray")
 
             messagebox.showinfo("Cart Cleared", "All items and payment fields have been cleared.")
-        except mysql.connector.Error as e:
+        except Error as e:
             messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 def open_library_page():
@@ -204,7 +199,7 @@ def open_library_page():
 
 #         conn.commit()
 
-#     except mysql.connector.Error as e:
+#     except Error as e:
 #         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 #     # Clear Cart after inserting into Library
@@ -268,7 +263,7 @@ def complete_payment():
 
         conn.commit()
 
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
     # Clear Cart after inserting into Library

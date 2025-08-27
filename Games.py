@@ -1,19 +1,14 @@
 import customtkinter as ctk
-import mysql.connector
 from PIL import Image
 from tkinter import messagebox
 import subprocess
 import os
 from UserDashboard import open_dashboard
+from mysql.connector import Error
+from db import get_connection
 
 # SQL Connection
-conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="yourRealPassword",
-    database="gamers_guild",
-    port=3306
-)
+conn = get_connection()
 cursor = conn.cursor()
 
 
@@ -48,13 +43,7 @@ def go_back_to_dashboard():
                 customerID = f.read().strip()
 
             # Connect to the database to get the FirstName
-            conn = mysql.connector.connect(
-                host="141.209.241.57",
-                port=3306,
-                user="darap1s",
-                password="mypass",
-                database="BIS698M1530_GRP5"
-            )
+            conn = get_connection()
             cursor = conn.cursor()
 
             fname_query = "SELECT FirstName FROM Customer WHERE CustomerID = %s"
@@ -74,7 +63,7 @@ def go_back_to_dashboard():
             conn.close()
         else:
             messagebox.showerror("Error", "Session expired. Please log in again.")
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 dashboard_icon_path = r"C:/Users/darap/PycharmProjects/darap1s_project/BIS 698_Group 5/Images"
@@ -97,7 +86,7 @@ game_library_icon_path = os.path.join(dashboard_icon_path, "dashboardGameLibrary
 cart_icon_path         = os.path.join(dashboard_icon_path, "dashboardCartIcon.png")
 back_icon_path         = os.path.join(dashboard_icon_path, "backButtonIcon.png")
 change_icon_path       = os.path.join(dashboard_icon_path, "editIcon.png")
-# signout_icon_path      = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\signoutButtonIcon.png"
+# signout_icon_path      = image_path("signoutButtonIcon.png")
 
 user_account_icon    = ctk.CTkImage(light_image=Image.open(user_account_icon_path), size=(80, 80))
 user_games_icon      = ctk.CTkImage(light_image=Image.open(user_games_icon_path), size=(80, 80))
@@ -175,7 +164,7 @@ def fetch_games():
     try:
         cursor.execute("SELECT Title, Price FROM Game LIMIT 6")  # Limit to 6 games
         return cursor.fetchall()
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
         return []
 
@@ -185,7 +174,7 @@ def fetch_games():
 #         cursor.execute("INSERT INTO Cart (GameTitle, Price) VALUES (%s, %s)", (title, price))
 #         conn.commit()
 #         messagebox.showinfo("Success", f"'{title}' has been added to your cart!")
-#     except mysql.connector.Error as e:
+#     except Error as e:
 #         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 # Buy game
@@ -207,7 +196,7 @@ def buy_game(title, price):
             messagebox.showinfo("Success", f"'{title}' has been added to your cart!")
         else:
             messagebox.showerror("Error", "Session expired. Please log in again.")
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 

@@ -1,12 +1,13 @@
 import customtkinter as ctk
 import tkinter as tk
-import mysql.connector
 from PIL import Image,ImageTk
 from tkinter import messagebox
 import re
 import subprocess
 import os
 from UserDashboard import open_dashboard
+from mysql.connector import Error
+from db import get_connection
 
 if __name__ == "__main__":
     root = ctk.CTk()
@@ -31,13 +32,7 @@ def fetch_user_details(customerID=None):
         messagebox.showerror("Error", "No customer ID provided!")
         return
     
-   conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="yourRealPassword",
-    database="gamers_guild",
-    port=3306
-)
+   conn = get_connection()
 cursor = conn.cursor()
 
     query = "SELECT FirstName, LastName, Address, Email, Password FROM Customer WHERE CustomerID = %s"
@@ -88,13 +83,7 @@ def submit_changes():
     new_address = address_entry.get().strip()
     new_password = new_password_entry.get().strip()
 
-    conn = mysql.connector.connect(
-        host="141.209.241.57",
-        port=3306,
-        user="darap1s",
-        password="mypass",
-        database="BIS698M1530_GRP5"
-    )
+    conn = get_connection()
     cursor = conn.cursor()
 
     if new_address and new_password:
@@ -125,10 +114,10 @@ def submit_changes():
 # Move all UI creation inside a main() function or under if __name__ == "__main__":
 if __name__ == "__main__":
     #User Account Icons
-    user_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\userIcon.png"
-    email_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\emailIcon.png"
-    password_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\passwordIcon.png"
-    address_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\addressIcon.png"
+    user_icon_path = image_path("userIcon.png")
+    email_icon_path = image_path("emailIcon.png")
+    password_icon_path = image_path("passwordIcon.png")
+    address_icon_path = image_path("addressIcon.png")
 
     user_icon = ctk.CTkImage(light_image=Image.open(user_icon_path), size=(20, 20))
     email_icon = ctk.CTkImage(light_image=Image.open(email_icon_path), size=(20, 20))
@@ -136,12 +125,12 @@ if __name__ == "__main__":
     address_icon = ctk.CTkImage(light_image=Image.open(address_icon_path), size=(20, 20))
 
     #User Dashboard Icons
-    user_account_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardUserIcon.png"
-    user_games_icon_path   = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameIcon.png"
-    game_library_icon_path = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardGameLibraryIcon.png"
-    cart_icon_path         = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\dashboardCartIcon.png"
-    back_icon_path         = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\backButtonIcon.png"
-    change_icon_path       = r"C:\Users\darap\PycharmProjects\darap1s_project\BIS 698_Group 5\Images\editIcon.png"
+    user_account_icon_path = image_path("dashboardUserIcon.png")
+    user_games_icon_path   = image_path("dashboardGameIcon.png")
+    game_library_icon_path = image_path("dashboardGameLibraryIcon.png")
+    cart_icon_path         = image_path("dashboardCartIcon.png")
+    back_icon_path         = image_path("backButtonIcon.png")
+    change_icon_path       = image_path("editIcon.png")
 
     user_account_icon    = ctk.CTkImage(light_image=Image.open(user_account_icon_path), size=(80, 80))
     user_games_icon      = ctk.CTkImage(light_image=Image.open(user_games_icon_path), size=(80, 80))
@@ -164,13 +153,7 @@ if __name__ == "__main__":
         user_email = email_entry.get().strip()
         user_password = password_entry.get().strip()
 
-        conn = mysql.connector.connect(
-        host     = "141.209.241.57",
-        port     = 3306,
-        user     = "darap1s",
-        password = "mypass",
-        database = "BIS698M1530_GRP5"
-        )
+        conn = get_connection()
         cursor = conn.cursor() 
 
         fname_and_custId_query = "SELECT CustomerID, FirstName FROM Customer WHERE Email = %s AND Password = %s"

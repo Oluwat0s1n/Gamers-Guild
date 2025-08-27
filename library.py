@@ -1,19 +1,14 @@
 import customtkinter as ctk
-import mysql.connector
 from PIL import Image
 from tkinter import messagebox
 import subprocess
 from UserDashboard import open_dashboard
 import os
+from mysql.connector import Error
+from db import get_connection
 
 # SQL Connection
-conn = mysql.connector.connect(
-    host="...",
-    user="...",
-    password="...",
-    database="...",
-    port=...
-)
+conn = get_connection()
 cursor = conn.cursor()
 )
 
@@ -52,13 +47,7 @@ def go_back_to_dashboard():
                 customerID = f.read().strip()
 
             # Connect to the database to get the FirstName
-            conn = mysql.connector.connect(
-    host="...",
-    user="...",
-    password="...",
-    database="...",
-    port=...
-)
+            conn = get_connection()
 cursor = conn.cursor()
 
             )
@@ -81,11 +70,11 @@ cursor = conn.cursor()
             conn.close()
         else:
             messagebox.showerror("Error", "Session expired. Please log in again.")
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 # User Dashboard Icons
-all_image_path = r"C:\Users\...\Images\Icon.png"
+all_image_path = image_path("Icon.png")
 
 user_account_icon = ctk.CTkImage(light_image=Image.open(user_account_icon_path), size=(80, 80))
 user_games_icon = ctk.CTkImage(light_image=Image.open(user_games_icon_path), size=(80, 80))
@@ -154,7 +143,7 @@ def display_games_from_db():
     try:
         cursor.execute("SELECT CustomerID, GameTitle, PurchaseDate FROM Library")
         games = cursor.fetchall()
-    except mysql.connector.Error as e:
+    except Error as e:
         messagebox.showerror("Database Error", f"An error occurred: {e}")
         return
 

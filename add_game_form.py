@@ -1,16 +1,12 @@
 import customtkinter as ctk
 from tkinter import messagebox
-import mysql.connector
+from db import get_connection
+from mysql.connector import Error
+from db import get_connection
 
 # SQL connection
-conn = mysql.connector.connect(
-    host="...",
-    user="...",
-    password="...",
-    database="...",
-    port=...
-)
-cursor = conn.cursor()
+conn = get_connection()     
+    cursor = conn.cursor()   
 
 # Fetch admin names and emails from the database
 cursor.execute("SELECT Name, Email FROM Admin")
