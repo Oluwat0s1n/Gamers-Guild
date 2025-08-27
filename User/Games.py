@@ -5,7 +5,7 @@ import subprocess
 import os
 from UserDashboard import open_dashboard
 from mysql.connector import Error
-from db import get_connection
+from core.db import get_connection
 
 # SQL Connection
 conn = get_connection()
@@ -20,7 +20,7 @@ root.resizable(False, False)
 
 # Navigation functions
 def account():
-    subprocess.Popen(["python", "UserAccount.py"])
+    subprocess.Popen(["python", "user/UserAccount.py"])
     root.destroy()
 
 def games():
@@ -28,11 +28,11 @@ def games():
     root.destroy()
 
 def cart():
-    subprocess.Popen(["python", "UserCart.py"])
+    subprocess.Popen(["python", "user/UserCart.py"])
     root.destroy()
 
 def games_library():
-    subprocess.Popen(["python", "library.py"])
+    subprocess.Popen(["python", "user/library.py"])
     root.destroy()
 
 def go_back_to_dashboard():

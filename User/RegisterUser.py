@@ -5,7 +5,7 @@ from tkinter import messagebox
 import re
 import subprocess
 from mysql.connector import Error
-from db import get_connection
+from core.db import get_connection
 
 # Database Connection
 def connect_database():
@@ -25,7 +25,7 @@ def checkbox_password():
     password_entry.configure(show="" if checkbox_status.get() else "*")
 
 def login_in():
-    subprocess.Popen(["python", "LoginUser.py"])
+    subprocess.Popen(["python", "user/LoginUser.py"])
     root.destroy()
 
 def on_clear_click():

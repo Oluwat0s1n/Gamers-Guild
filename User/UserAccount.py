@@ -7,7 +7,7 @@ import subprocess
 import os
 from UserDashboard import open_dashboard
 from mysql.connector import Error
-from db import get_connection
+from core.db import get_connection
 
 if __name__ == "__main__":
     root = ctk.CTk()
@@ -140,12 +140,12 @@ if __name__ == "__main__":
     change_icon          = ctk.CTkImage(light_image=Image.open(change_icon_path), size=(15, 15))
 
     def account():
-        subprocess.Popen(["python","UserAccount.py"])
+        subprocess.Popen(["python","user/UserAccount.py"])
         root.destroy()
 
     
     def games_library():
-        subprocess.Popen(["python", "library.py"])
+        subprocess.Popen(["python", "user/library.py"])
         root.destroy()
 
     def user_dashboard():
@@ -164,7 +164,7 @@ if __name__ == "__main__":
             customerID = fname_and_custId_result[0]
             firstName = fname_and_custId_result[1]
 
-            # Store the customerID in a file for UserAccount.py to read
+            # Store the customerID in a file for user/UserAccount.py to read
             with open("temp_customer_id.txt", "w") as f:
                 f.write(str(customerID))
 
@@ -208,7 +208,7 @@ if __name__ == "__main__":
         show_password_checkbox.configure(state="normal")
 
     def cart():
-        subprocess.Popen(["python","UserCart.py"])
+        subprocess.Popen(["python","user/UserCart.py"])
         root.destroy()
 
     #Outer Right Part of the Customer Registration Frame

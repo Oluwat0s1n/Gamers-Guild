@@ -10,7 +10,7 @@ app.geometry("400x350")
 app.resizable(True, True)
 
 # SQL connection
-from db import get_connection
+from core.db import get_connection
 conn = get_connection()
 cursor = conn.cursor()
 

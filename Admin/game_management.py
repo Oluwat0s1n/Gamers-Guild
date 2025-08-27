@@ -4,7 +4,7 @@ from PIL import Image
 import os
 import sys
 from mysql.connector import Error
-from db import get_connection
+from core.db import get_connection
 
 # SQL Connection
 conn = get_connection()
@@ -63,7 +63,7 @@ ctk.CTkButton(search_frame, text="Refresh", width=80, command=lambda: refresh_ga
 ctk.CTkButton(search_frame, image=load_icon("filter.png"), text="", width=50, command=lambda: filter_games()).pack(side="left", padx=5)
 ctk.CTkButton(search_frame, image=load_icon("sort.png"), text="", width=50, command=lambda: sort_games()).pack(side="left", padx=5)
 ctk.CTkButton(search_frame, text="+ Add Game", width=120, fg_color="#A58CF3", hover_color="#9278DF",
-              command=lambda: os.system(f"{sys.executable} add_game_form.py")).pack(side="right", padx=(0, 5))
+              command=lambda: os.system(f"{sys.executable} admin/add_game_form.py")).pack(side="right", padx=(0, 5))
 
 # Scrollable Game Frame
 scrollable_frame = ctk.CTkScrollableFrame(main_frame, fg_color="#F5F5FF", width=1000, height=550)
@@ -107,7 +107,7 @@ def deactivate_game(gid, title):
         refresh_games()
 
 def edit_game(gid):
-    os.system(f"{sys.executable} edit_game_form.py {gid}")
+    os.system(f"{sys.executable} admin/edit_game_form.py {gid}")
     app.destroy()
 
 def filter_games():

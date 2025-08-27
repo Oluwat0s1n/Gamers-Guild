@@ -26,11 +26,11 @@ change_icon_path       = image_path("editIcon.png")
     signout_icon         = ctk.CTkImage(light_image=Image.open(signout_icon_path), size=(20, 20))
 
     def account():
-        subprocess.Popen(["python", "UserAccount.py"])
+        subprocess.Popen(["python", "user/UserAccount.py"])
         root.destroy()
 
     def login_user():
-        subprocess.Popen(["python", "LoginUser.py"])
+        subprocess.Popen(["python", "user/LoginUser.py"])
         root.destroy()
 
     def games():
@@ -38,11 +38,11 @@ change_icon_path       = image_path("editIcon.png")
         root.destroy()
 
     def cart():
-        subprocess.Popen(["python", "UserCart.py"])
+        subprocess.Popen(["python", "user/UserCart.py"])
         root.destroy()
 
     def open_library_page():
-        subprocess.Popen(["python", "library.py"])
+        subprocess.Popen(["python", "user/library.py"])
         root.destroy()
 
     def resize_image(size, image_url):

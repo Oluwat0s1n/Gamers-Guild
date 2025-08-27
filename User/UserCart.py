@@ -6,30 +6,40 @@ from tkinter import messagebox
 import re
 import subprocess
 from decimal import Decimal
+import os
+from UserDashboard import open_dashboard
 from mysql.connector import Error
-from db import get_connection
+from core.db import get_connection
 
 root = ctk.CTk()
-root.title("Cart 111")
+root.title("User Cart 222")
 root.geometry("780x550")
 root.resizable(False,False)
 
 conn = get_connection()
 cursor = conn.cursor()
 
-# Icons
-icon_path = image_path("Icon.png")
+from core.db import image_path  # add this import at the top
+
+# User Dashboard Icons 
+user_account_icon_path = image_path("dashboardUserIcon.png")
+user_games_icon_path   = image_path("dashboardGameIcon.png")
+game_library_icon_path = image_path("dashboardGameLibraryIcon.png")
+cart_icon_path         = image_path("dashboardCartIcon.png")
+back_icon_path         = image_path("backButtonIcon.png")
+change_icon_path       = image_path("editIcon.png")
+
 
 user_account_icon    = ctk.CTkImage(light_image=Image.open(user_account_icon_path), size=(80, 80))
 user_games_icon      = ctk.CTkImage(light_image=Image.open(user_games_icon_path), size=(80, 80))
 game_library_icon    = ctk.CTkImage(light_image=Image.open(game_library_icon_path), size=(80, 80))
 cart_icon            = ctk.CTkImage(light_image=Image.open(cart_icon_path), size=(80, 80))
-back_icon            = ctk.CTkImage(light_image=Image.open(back_icon_path), size=(35, 35))
+back_icon            = ctk.CTkImage(light_image=Image.open(back_icon_path), size=(20, 20))
 cart_button_icon     = ctk.CTkImage(light_image=Image.open(cart_icon_path), size=(20, 20))
 change_icon          = ctk.CTkImage(light_image=Image.open(change_icon_path), size=(15, 15))
 
 def account():
-    subprocess.Popen(["python","UserAccount.py"])
+    subprocess.Popen(["python","user/UserAccount.py"])
     root.destroy()
 
 def featured_games():
@@ -37,7 +47,7 @@ def featured_games():
     root.destroy()
 
 def user_dashboard():
-    subprocess.Popen(["python","UserDashboard.py"])
+    subprocess.Popen(["python","user/UserDashboard.py"])
     root.destroy()
 
 def cart():
@@ -106,11 +116,11 @@ def display_cart_items():
     y_position = 10
 
     if not cart_items:
-        empty_label = ctk.CTkLabel(cart_items_frame, text="Your cart is empty!", text_color="black", font=("Arial", 14, "bold"))
-        empty_label.place(x=150, y=20)
+        empty_label = ctk.CTkLabel(cart_items_frame, text="Your cart is empty!", text_color="#493287",font=("Montserrat", 25, 'bold'))
+        empty_label.place(x=140, y=20)
         
         # Clear total price if empty
-        total_price_label.configure(text="Total Price: $0.00")
+        total_price_label.configure(text="Total Price: $0.00", text_color="#493287",font=("Montserrat", 12, 'bold'))
         return
 
     for item in cart_items:
@@ -152,61 +162,39 @@ def clear_cart():
             messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 def open_library_page():
-    subprocess.Popen(["python", "library.py"])
+    subprocess.Popen(["python", "user/library.py"])
     root.destroy()
 
-# def complete_payment():
-#     card_num = card_number.get()
-#     exp_date = expiration_date.get()
-#     cvv = security_code.get()
+def go_back_to_dashboard():
+    try:
+        # Read the stored customerID
+        if os.path.exists("temp_customer_id.txt"):
+            with open("temp_customer_id.txt", "r") as f:
+                customerID = f.read().strip()
 
-#     # Reset all entries to normal color first
-#     highlight_entry(card_number, "gray")
-#     highlight_entry(expiration_date, "gray")
-#     highlight_entry(security_code, "gray")
+            # Connect to the database to get the FirstName
+            conn = get_connection()
+            cursor = conn.cursor()
 
-#     # Validate Card Number (16 digits)
-#     if not re.fullmatch(r'\d{16}', card_num):
-#         highlight_entry(card_number, "red")
-#         messagebox.showerror("Invalid Card Number", "Card number must be exactly 16 digits.")
-#         return
+            fname_query = "SELECT FirstName FROM Customer WHERE CustomerID = %s"
+            cursor.execute(fname_query, (customerID,))
+            result = cursor.fetchone()
 
-#     # Validate Expiration Date (MM/YY format)
-#     if not re.fullmatch(r'(0[1-9]|1[0-2])\/\d{2}', exp_date):
-#         highlight_entry(expiration_date, "red")
-#         messagebox.showerror("Invalid Expiration Date", "Expiration date must be in MM/YY format (e.g., 05/26).")
-#         return
+            if result:
+                firstName = result[0]
+                # Close the Games window (assuming it's using Tkinter)
+                root.destroy()
+                # Call the dashboard with the firstName
+                open_dashboard(firstName)
+            else:
+                messagebox.showerror("Error", "Failed to retrieve user information.")
 
-#     # Validate CVV (3 digits)
-#     if not re.fullmatch(r'\d{3}', cvv):
-#         highlight_entry(security_code, "red")
-#         messagebox.showerror("Invalid Security Code", "Security code must be exactly 3 digits.")
-#         return
-
-#     # If everything is valid
-#     messagebox.showinfo(
-#         "Payment Successful",
-#         "Payment Completed Successfully!\nYou can view your game in your Library.\nThank you!"
-#     )
-
-#     # Insert purchased games into Library
-#     try:
-#         cursor.execute("SELECT GameTitle FROM Cart")
-#         games = cursor.fetchall()
-
-#         for game in games:
-#             cursor.execute("INSERT INTO Library (GameTitle) VALUES (%s)", (game[0],))
-
-#         conn.commit()
-
-#     except Error as e:
-#         messagebox.showerror("Database Error", f"An error occurred: {e}")
-
-#     # Clear Cart after inserting into Library
-#     clear_cart()
-
-#     # open Library page
-#     open_library_page()
+            cursor.close()
+            conn.close()
+        else:
+            messagebox.showerror("Error", "Session expired. Please log in again.")
+    except Error as e:
+        messagebox.showerror("Database Error", f"An error occurred: {e}")
 
 def complete_payment():
     card_num = card_number.get()
@@ -276,7 +264,7 @@ def complete_payment():
 # Title
 label_user_details = ctk.CTkLabel(user_dashboard_outer_frame_right, text="Cart",
                                   fg_color="#CDC6FF", text_color="#493287", font=('Montserrat', 30, 'bold'))
-label_user_details.place(x=250, y=20)
+label_user_details.place(x=30, y=20)
 
 # Main Right Inner Frame
 user_dashboard_inner_frame_right = ctk.CTkFrame(user_dashboard_outer_frame_right, fg_color="#C1B7FF", width=560, height=450, corner_radius=15)
@@ -288,31 +276,38 @@ cart_items_frame.place(x=30, y=20)
 
 # Total Price Label
 total_price_label = ctk.CTkLabel(user_dashboard_inner_frame_right, text="Total Price: $0.00",
-                                 text_color="black", font=("Arial", 14, "bold"))
+                                 text_color="#493287", font=("Montserrat", 20, "bold"))
 total_price_label.place(x=30, y=150)
 
 display_cart_items()
 
 # Payment Method Section
-ctk.CTkLabel(user_dashboard_inner_frame_right, text="PAYMENT METHOD", font=("Arial", 14, "bold"), text_color="black").place(x=30, y=190)
+ctk.CTkLabel(user_dashboard_inner_frame_right, text="PAYMENT METHOD", font=("Montserrat", 15, "bold"), text_color="#493287").place(x=30, y=190)
 
 payment_methods = ["Visa", "MasterCard", "PayPal", "American Express"]
 selected_payment_method = ctk.StringVar(value="Visa")
-ctk.CTkLabel(user_dashboard_inner_frame_right, text="Select a payment method", font=("Arial", 12)).place(x=30, y=230)
+ctk.CTkLabel(user_dashboard_inner_frame_right, text="Select a payment method", text_color="#493287",font=("Montserrat", 15, 'bold')).place(x=30, y=230)
 ctk.CTkOptionMenu(user_dashboard_inner_frame_right, variable=selected_payment_method, values=payment_methods, width=200).place(x=250, y=230)
 
 # Card Info
-ctk.CTkLabel(user_dashboard_inner_frame_right, text="Card number", font=("Arial", 12)).place(x=30, y=270)
+ctk.CTkLabel(user_dashboard_inner_frame_right, text="Card number", text_color="#493287",font=("Montserrat", 15, 'bold')).place(x=30, y=270)
 card_number = ctk.CTkEntry(user_dashboard_inner_frame_right, width=250)
 card_number.place(x=250, y=270)
 
-ctk.CTkLabel(user_dashboard_inner_frame_right, text="Expiration date", font=("Arial", 12)).place(x=30, y=310)
+ctk.CTkLabel(user_dashboard_inner_frame_right, text="Expiration date", text_color="#493287",font=("Montserrat", 15, 'bold')).place(x=30, y=310)
 expiration_date = ctk.CTkEntry(user_dashboard_inner_frame_right, width=100)
 expiration_date.place(x=250, y=310)
 
-ctk.CTkLabel(user_dashboard_inner_frame_right, text="Security code", font=("Arial", 12)).place(x=30, y=350)
+ctk.CTkLabel(user_dashboard_inner_frame_right, text="Security code", text_color="#493287",font=("Montserrat", 15, 'bold')).place(x=30, y=350)
 security_code = ctk.CTkEntry(user_dashboard_inner_frame_right, width=100)
 security_code.place(x=250, y=350)
+
+button_back = ctk.CTkButton(user_dashboard_outer_frame_right, text='Back', text_color="#493287",
+                            font=('Montserrat', 18, 'bold'), image = back_icon,
+                            width=15, height=30, corner_radius=30, fg_color="#C1B7FF",
+                            border_color='#6350AE', bg_color="#CDC6FF",
+                            border_width=1, hover_color="#8E92E6", command=go_back_to_dashboard)
+button_back.place(x=490, y=515)
 
 # Buttons
 complete_payment_button = ctk.CTkButton(

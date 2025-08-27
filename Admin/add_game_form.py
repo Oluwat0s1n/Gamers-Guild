@@ -1,8 +1,8 @@
 import customtkinter as ctk
 from tkinter import messagebox
-from db import get_connection
+from core.db import get_connection
 from mysql.connector import Error
-from db import get_connection
+from core.db import get_connection
 
 # SQL connection
 conn = get_connection()     

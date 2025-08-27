@@ -14,7 +14,7 @@ root.geometry("780x550")
 root.resizable(False,False)
 
 def user_dashboard():
-    subprocess.Popen(["python","UserDashboard.py"])
+    subprocess.Popen(["python","user/UserDashboard.py"])
     root.destroy()
 
 # Function to resize an image
@@ -41,7 +41,7 @@ def login_user():
         messagebox.showwarning("Missing Fields", "Please enter both email and password.")
         return
     try:
-      from db import get_connection
+      from core.db import get_connection
 conn = get_connection()
 cursor = conn.cursor()
 
@@ -68,7 +68,7 @@ cursor = conn.cursor()
             customerID = fname_and_custId_result[0]
             firstName = fname_and_custId_result[1]
 
-            # Store the customerID in a file for UserAccount.py to read
+            # Store the customerID in a file for user/UserAccount.py to read
             with open("temp_customer_id.txt", "w") as f:
                 f.write(str(customerID))
 
@@ -79,7 +79,7 @@ cursor = conn.cursor()
             open_dashboard(firstName)
             
             # Launch UserAccount separately with the customerID
-            # subprocess.Popen(["python", "UserAccount.py"])
+            # subprocess.Popen(["python", "user/UserAccount.py"])
             
         else:
             messagebox.showerror("Login Failed", "Invalid Email or Password.")

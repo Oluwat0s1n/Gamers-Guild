@@ -3,7 +3,7 @@ from tkinter import messagebox
 from PIL import Image
 import os
 import sys
-from db import get_connection, image_path     
+from core.db import get_connection, image_path     
 
 # ---------- DB ----------
 conn = get_connection()
@@ -54,10 +54,10 @@ ctk.CTkLabel(sidebar, text="", height=20).pack()
 
 sidebar_buttons = [
     ("Dashboard", "dashboard.png", "admin_dashboard.py"),
-    ("Games", "games.png", "game_management.py"),
-    ("Orders", "cart.png", "order_management.py"),
-    ("Inventory", "inventory.png", "inventory_sales.py"),
-    ("Users", "users.png", "user_management.py"),
+    ("Games", "games.png", "admin/game_management.py"),
+    ("Orders", "cart.png", "admin/order_management.py"),
+    ("Inventory", "inventory.png", "admin/inventory_sales.py"),
+    ("Users", "users.png", "admin/user_management.py"),
 ]
 
 for label, icon, script in sidebar_buttons:
@@ -92,10 +92,10 @@ ctk.CTkLabel(header, text="Admin", font=("Helvetica", 14), text_color="#000").pa
 
 # ---------- dashboard cards ----------
 cards = [
-    ("Total orders", count("SELECT COUNT(*) FROM `Order`"), "cart.png", "order_management.py"),
-    ("Active Users", count("SELECT COUNT(*) FROM Customer WHERE ActiveStatus = 'Active'"), "users.png", "user_management.py"),
-    ("Monthly Total Sales", "$22,500", "sales.png", "inventory_sales.py"),  # placeholder
-    ("Games Listed", count("SELECT COUNT(*) FROM Game WHERE Stock <> 'Inactive'"), "games.png", "game_management.py"),
+    ("Total orders", count("SELECT COUNT(*) FROM `Order`"), "cart.png", "admin/order_management.py"),
+    ("Active Users", count("SELECT COUNT(*) FROM Customer WHERE ActiveStatus = 'Active'"), "users.png", "admin/user_management.py"),
+    ("Monthly Total Sales", "$22,500", "sales.png", "admin/inventory_sales.py"),  # placeholder
+    ("Games Listed", count("SELECT COUNT(*) FROM Game WHERE Stock <> 'Inactive'"), "games.png", "admin/game_management.py"),
 ]
 
 cards_frame = ctk.CTkFrame(main, fg_color="#F5F5FF")
@@ -124,7 +124,7 @@ ctk.CTkLabel(
 ctk.CTkButton(
     main,
     text="+ Add Game",
-    command=lambda: open_script("add_game_form.py"),
+    command=lambda: open_script("admin/add_game_form.py"),
     width=120,
     fg_color="#A58CF3",
     hover_color="#9278DF",
@@ -177,7 +177,7 @@ def refresh_games():
             text="",
             width=40,
             fg_color="#E0D6FA",
-            command=lambda gid=gid: open_script("edit_game_form.py", gid),
+            command=lambda gid=gid: open_script("admin/edit_game_form.py", gid),
         ).pack(side="left", padx=2)
 
         ctk.CTkButton(

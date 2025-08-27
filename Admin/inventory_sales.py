@@ -7,7 +7,7 @@ import csv
 from fpdf import FPDF
 import datetime
 from mysql.connector import Error
-from db import get_connection
+from core.db import get_connection
 
 # SQL Connection
 conn = get_connection()
@@ -31,8 +31,8 @@ ctk.CTkLabel(sidebar, text="", height=20).pack()
 
 sidebar_buttons = [
     ("Dashboard", "dashboard.png", "admin_dashboard.py"),
-    ("Games", "games.png", "game_management.py"),
-    ("Users", "users.png", "user_management.py")
+    ("Games", "games.png", "admin/game_management.py"),
+    ("Users", "users.png", "admin/user_management.py")
 ]
 
 def open_script(script_name):

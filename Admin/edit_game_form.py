@@ -1,9 +1,9 @@
-# edit_game_form.py
+# admin/edit_game_form.py
 import customtkinter as ctk
 from tkinter import messagebox
 import sys
 from decimal import Decimal, InvalidOperation
-from db import get_connection  
+from core.db import get_connection  
 
 # --- read Game ID from admin_dashboard.py argument ---
 if len(sys.argv) < 2:

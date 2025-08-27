@@ -4,7 +4,7 @@ from PIL import Image
 import os
 import sys
 from mysql.connector import Error
-from db import get_connection
+from core.db import get_connection
 
 # SQL Connection
 conn = get_connection()
@@ -33,10 +33,10 @@ ctk.CTkLabel(sidebar, text="", height=20).pack()
 
 sidebar_buttons = [
     ("Dashboard", "dashboard.png", "admin_dashboard.py"),
-    ("Game Management", "games.png", "game_management.py"),
-    ("Orders", "cart.png", "order_management.py"),
-    ("Inventory & Sales", "inventory.png", "inventory_sales.py"),
-    ("User Management", "users.png", "user_management.py")
+    ("Game Management", "games.png", "admin/game_management.py"),
+    ("Orders", "cart.png", "admin/order_management.py"),
+    ("Inventory & Sales", "inventory.png", "admin/inventory_sales.py"),
+    ("User Management", "users.png", "admin/user_management.py")
 ]
 
 for label, icon, script in sidebar_buttons:

@@ -4,7 +4,7 @@ from PIL import Image
 import os
 import sys
 from mysql.connector import Error
-from db import get_connection
+from core.db import get_connection
 
 # SQL Connection
 conn = get_connection()
@@ -29,7 +29,7 @@ ctk.CTkLabel(sidebar, text="", height=20).pack()
 
 sidebar_buttons = [
     ("Dashboard", "dashboard.png", "admin_dashboard.py"),
-    ("Game Management", "games.png", "game_management.py"),
+    ("Game Management", "games.png", "admin/game_management.py"),
 ]
 
 def open_script(script_name):
