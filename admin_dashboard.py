@@ -3,9 +3,7 @@ from tkinter import messagebox
 from PIL import Image
 import os
 import sys
-from db import get_connection, image_path      # ← add this
-# from mysql.connector import Error        
-from db import get_connection
+from db import get_connection, image_path     
 
 # SQL Connection
 conn = get_connection()
@@ -184,4 +182,5 @@ refresh_orders()
 app.mainloop()
 cursor.close()
 conn.close()
+
 
