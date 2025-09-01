@@ -47,6 +47,12 @@ Python · CustomTkinter · Pillow · MySQL · `mysql-connector-python` · `pytho
    python3 -m venv .venv
    source .venv/bin/activate
 
+## Run
+
+```bash
+python main.py         # user login (default)
+python main.py --admin # admin dashboard
+
 ## Database scripts
 Schema lives in [`sql/GamersGuild_DB.sql`](sql/GamersGuild_DB.sql).
 Run (MySQL):
