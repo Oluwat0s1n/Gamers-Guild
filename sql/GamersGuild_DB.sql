@@ -1,7 +1,7 @@
 -- DATABASE CREATION
 CREATE DATABASE IF NOT EXISTS GamersGuildDB;
 USE GamersGuildDB;
-
+-- ===============================
 -- TABLE: Admin
 CREATE TABLE Admin (
     AdminID INT AUTO_INCREMENT PRIMARY KEY,
@@ -9,7 +9,7 @@ CREATE TABLE Admin (
     Email VARCHAR(50) UNIQUE NOT NULL,
     Password VARCHAR(100) NOT NULL -- store SHA-256 or other hashed value from Python
 );
-
+-- ===============================
 -- TABLE: Customer
 CREATE TABLE Customer (
     CustomerID INT AUTO_INCREMENT PRIMARY KEY,
