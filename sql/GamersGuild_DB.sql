@@ -1,7 +1,7 @@
 -- DATABASE CREATION
 CREATE DATABASE IF NOT EXISTS GamersGuildDB;
 USE GamersGuildDB;
--- ===============================
+
 -- TABLE: Admin
 CREATE TABLE Admin (
     AdminID INT AUTO_INCREMENT PRIMARY KEY,
@@ -9,7 +9,7 @@ CREATE TABLE Admin (
     Email VARCHAR(50) UNIQUE NOT NULL,
     Password VARCHAR(100) NOT NULL -- store SHA-256 or other hashed value from Python
 );
--- ===============================
+
 -- TABLE: Customer
 CREATE TABLE Customer (
     CustomerID INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,7 +22,6 @@ CREATE TABLE Customer (
     ActiveStatus VARCHAR(20) DEFAULT 'Active'
 );
 
--- ===============================
 -- TABLE: Game
 CREATE TABLE Game (
     GameID INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,7 +36,6 @@ CREATE TABLE Game (
         ON DELETE SET NULL
 );
 
--- ===============================
 -- TABLE: Inventory
 CREATE TABLE Inventory (
     InventoryID INT AUTO_INCREMENT PRIMARY KEY,
@@ -47,7 +45,6 @@ CREATE TABLE Inventory (
         ON DELETE CASCADE
 );
 
--- ===============================
 -- TABLE: Cart
 CREATE TABLE Cart (
     CartID INT AUTO_INCREMENT PRIMARY KEY,
@@ -58,7 +55,6 @@ CREATE TABLE Cart (
         ON DELETE CASCADE
 );
 
--- ===============================
 -- TABLE: Cart_Details
 CREATE TABLE Cart_Details (
     CartDetailID INT AUTO_INCREMENT PRIMARY KEY,
@@ -71,7 +67,6 @@ CREATE TABLE Cart_Details (
         ON DELETE CASCADE
 );
 
--- ===============================
 -- TABLE: Order
 CREATE TABLE `Order` (
     OrderID INT AUTO_INCREMENT PRIMARY KEY,
@@ -83,7 +78,6 @@ CREATE TABLE `Order` (
         ON DELETE CASCADE
 );
 
--- ===============================
 -- TABLE: OrderItems
 CREATE TABLE OrderItems (
     OrderItemID INT AUTO_INCREMENT PRIMARY KEY,
@@ -96,7 +90,6 @@ CREATE TABLE OrderItems (
         ON DELETE CASCADE
 );
 
--- ===============================
 -- TABLE: Payment
 CREATE TABLE Payment (
     PaymentID INT AUTO_INCREMENT PRIMARY KEY,
@@ -108,7 +101,6 @@ CREATE TABLE Payment (
         ON DELETE CASCADE
 );
 
--- ===============================
 -- TABLE: Library
 CREATE TABLE Library (
     LibraryID INT AUTO_INCREMENT PRIMARY KEY,
@@ -119,7 +111,6 @@ CREATE TABLE Library (
         ON DELETE CASCADE
 );
 
--- ===============================
 -- TABLE: Community
 CREATE TABLE Community (
     PostID INT AUTO_INCREMENT PRIMARY KEY,
