@@ -2,7 +2,7 @@
 
 A simple desktop **Game Store** built with **Python (CustomTkinter)** and **MySQL**.  
 Users can sign in, browse games, add to cart, and manage their library.  
-Admins can manage inventory, orders, and users — the whole shop floor.
+Admins can manage inventory, orders, and users ,the whole shop floor.
 
 ---
 
@@ -16,6 +16,7 @@ Admins can manage inventory, orders, and users — the whole shop floor.
 
 **For admins**
 - Add / edit / delete games
+- Add / edit Client's orders
 - Manage orders & inventory
 - View least-purchasing customers
 - Basic user management
