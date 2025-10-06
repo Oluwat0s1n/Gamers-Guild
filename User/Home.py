@@ -14,7 +14,7 @@ root.geometry("780x550")
 root.resizable(False,False)
 
 def login_in():
-    Subprocess.Propen(["python","user/LoginUser.py"])
+    Subprocess.Popen(["python","user/LoginUser.py"])
     root.destroy()
 
 def register():
@@ -82,3 +82,4 @@ register_button.place(x = 130, y = 380)
 
 
 root.mainloop()
+
