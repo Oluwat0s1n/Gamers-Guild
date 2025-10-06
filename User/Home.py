@@ -14,7 +14,7 @@ root.geometry("780x550")
 root.resizable(False,False)
 
 def login_in():
-    subprocess.Popen(["python","user/LoginUser.py"])
+    Subprocess.Propen(["python","user/LoginUser.py"])
     root.destroy()
 
 def register():
@@ -78,6 +78,7 @@ register_button = ctk.CTkButton(home_inner_frame_right,text = "Register",text_co
                                 height = 44, border_color = '#6350AE',fg_color = "#493287",hover_color = "#25285E",
                                 font = ('Montserrat',14, 'bold'), command=register)
 register_button.place(x = 130, y = 380)
+
 
 
 root.mainloop()
